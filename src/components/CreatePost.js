@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import Dialog from '@material-ui/core/Dialog';
+import Input from '@material-ui/core/Input';
 
 import Header from './Header/Header';
 
@@ -16,7 +17,7 @@ const styles = {
   },
   post: {
     marginBottom: '0.5em',
-    border: '1px solid #bbb'
+    // border: '1px solid #bbb'
   },
   postDetails: {
     marginTop: '40px'
@@ -27,11 +28,16 @@ function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-const ViewPost = ({ classes, openViewPost, postContent, handleClose }) => {
+const CreatePost = ({ classes, openCreatePost, handleClose }) => {
+  const textPostForm = {};
+  const imagePostForm = {};
+  const linkPostForm = {};
+
+  console.log(openCreatePost);
   return (
     <Dialog
       fullScreen
-      open={openViewPost}
+      open={openCreatePost}
       onClose={handleClose}
       TransitionComponent={Transition}
     >
@@ -40,21 +46,39 @@ const ViewPost = ({ classes, openViewPost, postContent, handleClose }) => {
           <IconButton color="inherit" onClick={handleClose} aria-label="Close">
             <CloseIcon />
           </IconButton>
+          Link Post
+          <IconButton color="inherit" onClick={handleClose} aria-label="Close">
+            Post
+          </IconButton>
         </Toolbar>
       </AppBar>
       <div className={classes.postDetails}>
-        <Typography >
-          {postContent.author}
-        </Typography>
-        <Typography >
-          {postContent.title}
-        </Typography>
-        <Typography >
-          {postContent.content}
-        </Typography>
+        <Input
+          defaultValue="ME"
+          className={classes.input}
+          inputProps={{
+            'aria-label': 'Author',
+          }}
+        />
+        <Input
+          defaultValue="title"
+          className={classes.input}
+          inputProps={{
+            'aria-label': 'An interesting title',
+          }}
+        />
+        <Input
+          multiline="true"
+          defaultValue="title"
+          rowMax="10"
+          className={classes.input}
+          inputProps={{
+            'aria-label': 'An interesting title',
+          }}
+        />
       </div>
     </Dialog>
   );
 }
 
-export default withStyles(styles)(ViewPost);
+export default withStyles(styles)(CreatePost);
