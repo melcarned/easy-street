@@ -5,9 +5,14 @@ import PostFeed from './components/PostFeed';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
-  // palette: {
-  //   type: 'dark',
-  // },
+    palette: {
+      primary: {
+        main: '#032765',
+      },
+      secondary: {
+        main: '#fa6866',
+      },
+    },
 });
 
 class App extends Component {
@@ -16,9 +21,9 @@ class App extends Component {
       <React.Fragment>
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
-          <Grid container spacing={16}>
+         
             <PostFeed />
-          </Grid>
+
         </MuiThemeProvider>
       </React.Fragment>
     );

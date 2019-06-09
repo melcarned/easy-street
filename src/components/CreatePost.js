@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import Dialog from '@material-ui/core/Dialog';
-import Input from '@material-ui/core/Input';
+import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import AddAPhoto from '@material-ui/icons/AddAPhoto';
+import Collections from '@material-ui/icons/Collections';
+import Explore from '@material-ui/icons/Explore';
+import NewPostHeader from './Header/NewPostHeader';
 
-import Header from './Header/Header';
-
-const styles = {
+const styles = (theme) => ({
   postFeed: {
     backgroundColor: '#ddd'
   },
@@ -20,62 +20,97 @@ const styles = {
     // border: '1px solid #bbb'
   },
   postDetails: {
-    marginTop: '40px'
+    margin: theme.spacing.unit,
+  },
+  textField: {
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
+  },
+  photoIcon: {
+    display: 'none'
+  },
+  photoIcons: {
+
+  },
+  getPhoto: {
+
   }
-}
+});
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-const CreatePost = ({ classes, openCreatePost, handleClose }) => {
-  const textPostForm = {};
-  const imagePostForm = {};
-  const linkPostForm = {};
+function CreatePost({ classes, openCreatePost, handleClose }) {
+  const [age, setAge] = useState(0);
 
-  console.log(openCreatePost);
+  function handleChange(event) {
+    setAge(event.target.value);
+  };
+
   return (
     <Dialog
       fullScreen
-      open={openCreatePost}
+      open={openCreatePost || false}
       onClose={handleClose}
       TransitionComponent={Transition}
     >
-      <AppBar>
-        <Toolbar>
-          <IconButton color="inherit" onClick={handleClose} aria-label="Close">
-            <CloseIcon />
-          </IconButton>
-          Link Post
-          <IconButton color="inherit" onClick={handleClose} aria-label="Close">
-            Post
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <div className={classes.postDetails}>
-        <Input
-          defaultValue="ME"
-          className={classes.input}
-          inputProps={{
-            'aria-label': 'Author',
+      <NewPostHeader
+        handleClose={handleClose}
+      />
+      <form className={classes.postDetails}>
+        {/* <Select
+          className={classes.textField}
+          value={age}
+          onChange={handleChange}
+          displayEmpty
+          fullWidth
+          name="age"
+        // className={classes.selectEmpty}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value={10}><Explore />Ten</MenuItem>
+          <MenuItem value={20}><Explore />Twenty</MenuItem>
+          <MenuItem value={30}><Explore />Thirty</MenuItem>
+        </Select> */}
+        <TextField
+          className={classes.textField}
+          placeholder="Your name"
+          fullWidth
+          InputLabelProps={{
+            shrink: true,
           }}
         />
-        <Input
-          defaultValue="title"
-          className={classes.input}
-          inputProps={{
-            'aria-label': 'An interesting title',
+        <TextField
+          className={classes.textField}
+          placeholder="An interesting caption"
+          multiline
+          fullWidth
+          InputLabelProps={{
+            shrink: true,
+            ariaLabel: 'An interesting title',
           }}
         />
-        <Input
-          multiline="true"
-          defaultValue="title"
-          rowMax="10"
-          className={classes.input}
-          inputProps={{
-            'aria-label': 'An interesting title',
-          }}
-        />
+      </form>
+      <div className={classes.photoIcons} >
+        <div className={classes.getPhoto}>
+          <input accept="image/*" className={classes.photoIcon} id="icon-button-camera" type="file" />
+          <label htmlFor="icon-button-camera">
+            <IconButton color="primary" component="span">
+              <AddAPhoto />
+            </IconButton>
+          </label>
+        </div>
+        <div className={classes.getPhoto}>
+          <input accept="image/*" className={classes.photoIcon} id="icon-button-file" type="file" />
+          <label htmlFor="icon-button-file">
+            <IconButton color="primary" component="span">
+              <Collections />
+            </IconButton>
+          </label>
+        </div>
       </div>
     </Dialog>
   );

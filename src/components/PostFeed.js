@@ -1,25 +1,24 @@
 import React, { useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
+
 import Header from './Header/Header';
+import Post from './Post';
 import ViewPost from './ViewPost';
 import CreatePost from './CreatePost';
 
 const styles = (theme) => ({
-  headerAdjustment: {
-    marginBottom: '0.1em',
-    ...theme.mixins.toolbar
-  },
   postFeed: {
-    backgroundColor: '#ddd'
+    backgroundColor: '#666'
   },
   post: {
-    marginTop: '0.4em',
+    marginBottom: '0.4em',
     // border: '1px solid #bbb'
   }
 })
@@ -27,52 +26,53 @@ const styles = (theme) => ({
 const mockPosts = [
   {
     id: 0,
-    text: 'First post',
+    text: 'Lizards are a widespread group of squamate reptiles, with over 6,000',
     author: 'damiano',
     title: 'good title',
     content: 'good content'
   },
   {
     id: 1,
-    text: 'Second post'
+    text: 'Lizards are a widespread group of squamate reptiles, with over 6,000'
   },
   {
     id: 2,
-    text: 'Third Post'
+    text: 'Lizards are a widespread group of squamate reptiles, with over 6,000'
   },
   {
     id: 3,
-    text: 'Fourth Post'
+    text: 'Lizards are a widespread group of squamate reptiles, with over 6,000'
   },
   {
     id: 4,
-    text: 'Fifth Post'
+    text: 'Lizards are a widespread group of squamate reptiles, with over 6,000'
   },
   {
     id: 5,
-    text: '6 Post'
+    text: 'Lizards are a widespread group of squamate reptiles, with over 6,000'
   },
   {
     id: 6,
-    text: '7 Post'
+    text: 'Lizards are a widespread group of squamate reptiles, with over 6,000'
   },
   {
     id: 7,
-    text: '8 Post'
+    text: 'Lizards are a widespread group of squamate reptiles, with over 6,000'
   }
 ]
 
-const PostFeed = ({ classes }) => {
+function PostFeed({ classes }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [viewingPost, setViewingPost] = useState(false);
   const [creatingPost, setCreatingPost] = useState(false);
-  const [post, setPost] = useState(false);
+  // const [post, setPost] = useState(false);
   const [posts, setPosts] = useState(mockPosts);
 
-  function updatePost(event) {
-    setPost(event.target.value);
-  }
+  // function updatePost(event) {
+  //   setPost(event.target.value);
+  // }
 
+  
   function handleClickNewPost() {
     setCreatingPost(true);
     setAnchorEl(null);
@@ -91,47 +91,25 @@ const PostFeed = ({ classes }) => {
   };
 
   function getCurrentPosts() {
-    const currentPosts = posts.map((post) =>
-      (<Card key={post.id} className={classes.post} square elevation={0}>
-        <CardActionArea onClick={handleClickPost}>
-          <CardMedia
-            image="/static/images/cards/contemplative-reptile.jpg"
-            title="Contemplative Reptile"
-          />
-          <CardContent>
-            <Avatar>D</Avatar>
-            <Typography gutterBottom variant="body1">
-              Posted by damiano.melcarne - 1h
-            </Typography>
-            <Typography gutterBottom variant="title">
-              {post.text}
-            </Typography>
-            <Typography component="p">
-              Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-              across all continents except Antarctica
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>));
+    const currentPosts = posts.map(post =>
+      (<Post key={post.id} post={post} handleClickPost={handleClickPost} />));
 
-      return currentPosts;
+    return currentPosts;
   }
 
   return (
     <React.Fragment>
-      <Header 
+      <Header
         anchorEl={anchorEl}
         handleClickPost={handleClickNewPost}
       />
-      <div className={classes.headerAdjustment} />
       {getCurrentPosts()}
-
       <ViewPost
         openViewPost={viewingPost}
         handleClose={handleClosePostView}
         postContent={{ ...posts[0] }}
       />
-      <CreatePost 
+      <CreatePost
         openCreatePost={creatingPost}
         handleClose={handleCloseCreatePost}
       />

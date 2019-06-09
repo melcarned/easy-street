@@ -1,14 +1,22 @@
-const styles = {
+const styles = (theme) => ({
+  headerAdjustment: {
+    ...theme.mixins.toolbar
+  },
   header: {
-    backgroundColor: 'white',
-    color: 'red'
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    flexGrow: 1,
+  },
+  headerLabel: {
+    flexGrow: 1,
   },
   headerButton: {
     float: 'right'
   },
   actionMenu: {
-    
+
   }
-}
+});
 
 export default styles;
