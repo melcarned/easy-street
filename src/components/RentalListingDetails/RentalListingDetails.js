@@ -13,11 +13,13 @@ function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-const RentalListingDetails = ({ classes, openViewPost, postContent, handleClose }) => {
+function RentalListingDetails({ classes, openListingDetails, rentalListing, handleClose }) {
+  const { neighborhood, bed, bath, listingCompany} = rentalListing;
+  
   return (
     <Dialog
       fullScreen
-      open={openViewPost}
+      open={openListingDetails}
       onClose={handleClose}
       TransitionComponent={Transition}
     >
@@ -28,16 +30,19 @@ const RentalListingDetails = ({ classes, openViewPost, postContent, handleClose 
           </IconButton>
         </Toolbar>
       </AppBar>
-      <div className={classes.postDetails}>
-        <Typography >
-          {postContent.author}
-        </Typography>
-        <Typography >
-          {postContent.title}
-        </Typography>
-        <Typography >
-          {postContent.content}
-        </Typography>
+      <div className={classes.listingContainer}>
+        <img className={classes.listingImage} src={rentalListing.listingImageURL} alt="" />
+        <div className={classes.listingDetails}>
+          <Typography gutterBottom variant="body1" className={classes.neighborhoodTag}>
+            <strong>{neighborhood && neighborhood.toUpperCase()}</strong>
+          </Typography>
+          <Typography gutterBottom variant="body1">
+            {bed} beds <strong>&#183;</strong> {bath} bath
+          </Typography>
+          <Typography gutterBottom variant="body1">
+            {listingCompany}
+          </Typography>
+        </div>
       </div>
     </Dialog>
   );

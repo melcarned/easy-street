@@ -9,18 +9,18 @@ import CreatePost from '../NewRentalListingForm/NewRentalListingForm';
 import styles from './Header.style';
 
 const NewPostHeader = (props) => {
-  const { classes, handleClose, handlePostRentalListing } = props;
+  const { classes, handleClose, handleListRentalAndClose } = props;
 
   return (
     <>
       <AppBar square elevation={2}>
-        <Toolbar variant="dense">
-          <IconButton color="inherit" onClick={handleClose} aria-label="Close">
+        <Toolbar>
+          <IconButton className={classes.closeButton} color="inherit" onClick={handleClose} aria-label="Close">
             <Close />
           </IconButton>
-          <Typography className={classes.headerLabel} variant="h6">New Rental Listing</Typography>
-          <IconButton color="inherit" onClick={handlePostRentalListing} aria-label="Close">
-            <Typography component="p">LIST</Typography>
+          <Typography className={classes.headerLabel} variant="h6" color="inherit">New Rental Listing</Typography>
+          <IconButton className={classes.postListingButton} type="submit" color="inherit" onClick={handleListRentalAndClose} aria-label="Close">
+            <Typography component="p" color="inherit"><strong>LIST</strong></Typography>
           </IconButton>
         </Toolbar>
       </AppBar>

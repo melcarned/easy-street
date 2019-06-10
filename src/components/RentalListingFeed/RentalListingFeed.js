@@ -10,8 +10,9 @@ import styles from './RentalListingFeed.styles';
 
 function RentalListingFeed({ classes }) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [viewingPost, setViewingPost] = useState(false);
-  const [creatingPost, setCreatingPost] = useState(false);
+  const [viewingListingDetails, setViewingListingDetails] = useState(false);
+  const [currentListingDetails, setCurrentListingDetails] = useState({});
+  const [creatingRentalListing, setCreatingRentalListing] = useState(false);
   const [rentalListings, setRentalListings] = useState([]);
 
   useEffect(
@@ -23,55 +24,57 @@ function RentalListingFeed({ classes }) {
           snapshot => setRentalListings(snapshot.val()),
           error => console.log("Error fetching rental listings.", error)
         );
-      console.log(rentalListings);
     }, [JSON.stringify(rentalListings)]);
 
   function handleClickNewPost() {
-    setCreatingPost(true);
+    setCreatingRentalListing(true);
     setAnchorEl(null);
   };
 
   function handleCloseCreatePost() {
-    setCreatingPost(false);
+    setCreatingRentalListing(false);
   };
 
-  function handleClickPost() {
-    setViewingPost(true);
+  function handleClickPost(rentalListing) {
+    console.log(rentalListing);
+    setViewingListingDetails(true);
+    setCurrentListingDetails(rentalListing);
   };
 
   function handleClosePostView() {
-    setViewingPost(false);
+    setViewingListingDetails(false);
   };
 
   function getRentalListings() {
     const rentalListingComponents = Object.entries(rentalListings)
+      .reverse()
       .map(([key, rentalListing]) =>
         (<RentalListing
           key={key}
           rentalListing={rentalListing}
-          handleClickPost={handleClickPost}
+          handleClickPost={() => handleClickPost(rentalListing)}
         />));
 
     return rentalListingComponents;
   }
 
   return (
-    <React.Fragment>
+    <>
       <Header
         anchorEl={anchorEl}
-        handleClickPost={handleClickNewPost}
+        handleClickNewPost={handleClickNewPost}
       />
       {getRentalListings()}
       <RentalListingDetails
-        openViewPost={viewingPost}
+        openListingDetails={viewingListingDetails}
         handleClose={handleClosePostView}
-        postContent={{ ...rentalListings[0] }}
+        rentalListing={currentListingDetails}
       />
       <NewRentalListingForm
-        openCreatePost={creatingPost}
+        openNewRentalListing={creatingRentalListing}
         handleClose={handleCloseCreatePost}
       />
-    </React.Fragment>
+    </>
   );
 };
 

@@ -5,21 +5,18 @@ const styles = (theme) => ({
   post: {
     marginBottom: '0.5em',
   },
-  postDetails: {
+  newListingDetails: {
     margin: theme.spacing.unit,
   },
-  textField: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
+  formField: {
+    marginTop: theme.spacing.unit * 1.5,
+    marginBottom: theme.spacing.unit * 1.5,
   },
-  photoIcon: {
-    display: 'none'
+  photoPickerInput: {
+    display: 'none',
   },
-  photoIcons: {
-
-  },
-  getPhoto: {
-
+  photoPickerButtonText: {
+    marginLeft: '10px'
   }
 });
 
