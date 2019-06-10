@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,27 +7,13 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import Dialog from '@material-ui/core/Dialog';
-
-import Header from './Header/Header';
-
-const styles = {
-  postFeed: {
-    backgroundColor: '#ddd'
-  },
-  post: {
-    marginBottom: '0.5em',
-    border: '1px solid #bbb'
-  },
-  postDetails: {
-    marginTop: '40px'
-  }
-}
+import styles from './RentalListingDetails.styles';
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-const ViewPost = ({ classes, openViewPost, postContent, handleClose }) => {
+const RentalListingDetails = ({ classes, openViewPost, postContent, handleClose }) => {
   return (
     <Dialog
       fullScreen
@@ -57,4 +43,4 @@ const ViewPost = ({ classes, openViewPost, postContent, handleClose }) => {
   );
 }
 
-export default withStyles(styles)(ViewPost);
+export default withStyles(styles)(RentalListingDetails);

@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
-import CreatePost from '../CreatePost';
+import CreatePost from '../NewRentalListingForm/NewRentalListingForm';
 import styles from './Header.style';
 
 const Header = (props) => {

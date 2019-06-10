@@ -6,35 +6,30 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
+import styles from './RentalListing.styles';
 
-const styles = (theme) => ({
-  post: {
-    marginBottom: '0.75em',
-  }
-})
-
-function Post({ classes, post, handleClickPost }) {
+function RentalListing({ classes, rentalListing, handleClickPost }) {
   return (
     <Card className={classes.post} square elevation={2}>
       <CardActionArea onClick={handleClickPost}>
         <CardMedia
           style={{ height: 200 }}
-          image='http://via.placeholder.com/350x150'
+          image='https://via.placeholder.com/350x150'
           title="Contemplative Reptile"
         />
         <CardContent>
           <Typography gutterBottom variant="body1">
-            <strong>East Village</strong>
-            </Typography>
-          <Typography gutterBottom variant="body1">
-            3 beds - 1 bath
+            <strong>{rentalListing.neighborhood}</strong>
           </Typography>
           <Typography gutterBottom variant="body1">
-            Home Renters LLC
-            </Typography>
+            {rentalListing.beds} beds - {rentalListing.baths} bath
+          </Typography>
+          <Typography gutterBottom variant="body1">
+            {rentalListing.listingCompany}
+          </Typography>
         </CardContent>
       </CardActionArea>
     </Card>)
 }
 
-export default withStyles(styles)(Post);
+export default withStyles(styles)(RentalListing);
