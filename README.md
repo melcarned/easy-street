@@ -1,4 +1,4 @@
-![EasyStreet Feed](https://firebasestorage.googleapis.com/v0/b/easy-street-5da22.appspot.com/o/Screenshots%2FRental_Listing_Feed.jpg?alt=media&token=d1d32961-3dec-412b-ad59-bb30c681cd61).
+![EasyStreet Feed](https://firebasestorage.googleapis.com/v0/b/easy-street-5da22.appspot.com/o/Screenshots%2FRental_Listing_Feed.png?alt=media&token=e19bbd9d-86f8-4544-a4db-3533bdf5b4d5 | width=100).
 
 ## Available Scripts
 
