@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![EasyStreet Feed](https://firebasestorage.googleapis.com/v0/b/easy-street-5da22.appspot.com/o/Screenshots%2FRental_Listing_Feed.png?alt=media&token=09ab043c-856e-45eb-af1e-92ee0e4df627).
 
 ## Available Scripts
 
