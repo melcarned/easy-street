@@ -1,4 +1,4 @@
-#EasyStreet
+# EasyStreet
 
 ## An ultra light-weight StreetEasy clone to display progressive web app capabilities.
 
@@ -30,8 +30,8 @@ Your app is ready to be deployed!
 
 ### `firebase deploy`
 
-Deploy the app using firebase hosting.
-Note: This requires firebase-tools and a firebase account.
+Deploy the app using firebase hosting.<br>
+This requires firebase-tools and a firebase account.
 
 
 
