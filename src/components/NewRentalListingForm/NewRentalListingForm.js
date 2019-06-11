@@ -1,68 +1,45 @@
-/* eslint-disable no-undef */
 import React, { useState } from 'react';
+import uuidv4 from 'uuid/v4';
 import firebase from '../../firebaseConfig';
 import { withStyles } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 import Dialog from '@material-ui/core/Dialog';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Collections from '@material-ui/icons/Collections';
-import NewPostHeader from '../Header/NewPostHeader';
+import NewRentalListingHeader from './NewRentalListingHeader/NewRentalListingHeader';
+import RentalListingImageUploader from './RentalListingImageUploader/RentalListingImageUploader';
 import styles from './NewRentalListing.styles';
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-function NewRentalListingForm({ classes, openNewRentalListing, handleClose }) {
+function NewRentalListingForm({ classes, openNewRentalListing, handleCloseNewRentalListingForm }) {
   const [neighborhood, setNeighborhood] = useState('');
   const [numberOfBath, setNumberOfBath] = useState('');
   const [numberOfBed, setNumberOfBed] = useState('');
+  const [rent, setRent] = useState('');
   const [rentalCompanyName, setRentalCompanyName] = useState('');
-  const [listingImageURL, setListingImageURL] = useState('https://via.placeholder.com/350x150');
-  const [listingImage, setListingImage] = useState({});
-  const [imagePreviewUrl, setImagePreviewUrl] = useState('');
-
-  function clearNewListingForm() {
-    setNeighborhood('');
-    setNumberOfBath('');
-    setNumberOfBed('');
-    setRentalCompanyName('');
-    setListingImageURL('https://via.placeholder.com/350x150');
-    setListingImage({});
-    setImagePreviewUrl('');
-    handleClose();
-  }
+  const [rentalListingImage, setRentalListingImage] = useState({});
 
   function postRentalListing() {
-    storeRentalImage();
+    const imageId = uuidv4();
 
-
-    clearNewListingForm()
-  }
-
-  function storeRentalImage() {
     firebase
       .storage()
-      .ref(`RentalListingImages/${listingImage.name}`)
-      .put(listingImage)
+      .ref(`RentalListingImages/listing_${imageId}`)
+      .put(rentalListingImage)
       .on('state_changed',
-        snapshot => {
-          // const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-          // console.log(progess);
-          // setUploadProgress(progress);
-        },
+        snapshot => { },
         error => {
-          console.log(error)
+          console.log("Error uploading image.", error);
         },
         () => {
           firebase
             .storage()
             .ref('RentalListingImages')
-            .child(listingImage.name)
+            .child(`listing_${imageId}`)
             .getDownloadURL()
             .then(url => {
-              setListingImageURL(url);
               firebase
                 .database()
                 .ref('rentalListings')
@@ -70,11 +47,23 @@ function NewRentalListingForm({ classes, openNewRentalListing, handleClose }) {
                   neighborhood,
                   bed: numberOfBed,
                   bath: numberOfBath,
+                  rent,
                   listingCompany: rentalCompanyName,
-                  listingImageURL
+                  listingImageURL: url
                 })
+              clearNewListingForm();
             })
         })
+  }
+
+  function clearNewListingForm() {
+    setNeighborhood('');
+    setNumberOfBath('');
+    setNumberOfBed('');
+    setRentalCompanyName('');
+    setRent('');
+    setRentalListingImage({});
+    handleCloseNewRentalListingForm();
   }
 
   function handleNeighborhoodChange(event) {
@@ -89,38 +78,30 @@ function NewRentalListingForm({ classes, openNewRentalListing, handleClose }) {
     setNumberOfBed(event.target.value);
   };
 
+  function handleMonthlyRentChange(event) {
+    setRent(event.target.value);
+  }
+
   function handleRentalCompanyNameChange(event) {
     setRentalCompanyName(event.target.value);
-  };
-
-  function handleListingImageChange(event) {
-    let fileReader = new FileReader();
-    let file = event.target.files[0];
-
-    fileReader.onloadend = () => {
-      setListingImage(file);
-      setImagePreviewUrl(fileReader.result);
-    }
-
-    fileReader.readAsDataURL(file);
   };
 
   return (
     <Dialog
       fullScreen
       open={openNewRentalListing || false}
-      onClose={handleClose}
+      onClose={clearNewListingForm}
       TransitionComponent={Transition}
     >
-      <NewPostHeader
-        handleClose={handleClose}
-        handleListRentalAndClose={postRentalListing}
+      <NewRentalListingHeader
+        handleCloseNewRentalListingForm={clearNewListingForm}
+        handlePostRentalListing={postRentalListing}
       />
-      <form className={classes.newListingDetails}>
+      <form className={classes.newRentalListingDetails}>
         <TextField
-          className={classes.formField}
+          className={classes.rentalListingFormField}
           placeholder="Neighborhood of apartment"
-          label="Neighborhood of apartment"
+          label="Neighborhood"
           onChange={handleNeighborhoodChange}
           value={neighborhood}
           fullWidth
@@ -128,9 +109,9 @@ function NewRentalListingForm({ classes, openNewRentalListing, handleClose }) {
           variant="outlined"
         />
         <TextField
-          label="# of bedrooms"
+          label="# of Bedrooms"
           onChange={handleNumberOfBedChange}
-          className={classes.formField}
+          className={classes.rentalListingFormField}
           placeholder="# of bedrooms"
           value={numberOfBed}
           fullWidth
@@ -138,9 +119,9 @@ function NewRentalListingForm({ classes, openNewRentalListing, handleClose }) {
           variant="outlined"
         />
         <TextField
-          label="# of bathrooms"
+          label="# of Bathrooms"
           onChange={handleNumberOfBathChange}
-          className={classes.formField}
+          className={classes.rentalListingFormField}
           placeholder="# of bathrooms"
           value={numberOfBath}
           fullWidth
@@ -148,43 +129,27 @@ function NewRentalListingForm({ classes, openNewRentalListing, handleClose }) {
           variant="outlined"
         />
         <TextField
+          label="Monthly Rent"
+          onChange={handleMonthlyRentChange}
+          className={classes.rentalListingFormField}
+          placeholder="Monthy Rent"
+          value={rent}
+          fullWidth
+          margin="normal"
+          variant="outlined"
+        />
+        <TextField
           label="Rental Company Name"
-          className={classes.formField}
-          placeholder="Name of your rental company"
           onChange={handleRentalCompanyNameChange}
+          className={classes.rentalListingFormField}
+          placeholder="Name of your rental company"
           value={rentalCompanyName}
           fullWidth
           margin="normal"
           variant="outlined"
         />
-        <div className={classes.formField}>
-          {imagePreviewUrl ?
-            <img
-              src={imagePreviewUrl}
-              alt="Uploaded rental property"
-              width="100%"
-            /> :
-            <>
-              <input
-                onChange={handleListingImageChange}
-                className={classes.photoPickerInput}
-                id="icon-button-file"
-                type="file" />
-              <label htmlFor="icon-button-file">
-                <Button
-                  color="primary"
-                  component="span"
-                  variant="contained"
-                  size="large">
-                  <Collections />
-                  <span className={classes.photoPickerButtonText}>Choose a photo</span>
-                </Button>
-              </label>
-            </>
-          }
-        </div>
+        <RentalListingImageUploader setRentalListingImage={setRentalListingImage} />
       </form>
-
     </Dialog >
   );
 }

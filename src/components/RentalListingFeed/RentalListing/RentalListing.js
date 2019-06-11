@@ -7,27 +7,35 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import styles from './RentalListing.styles';
 
-function RentalListing({ classes, rentalListing, handleClickPost }) {
-  const rentalListingTitle = `${rentalListing.neighborhood} - ${rentalListing.beds} - ${rentalListing.baths}`
-  
+function RentalListing({ classes, rentalListing, handleClickRentalListing }) {
+  const { neighborhood, bed, bath, rent, listingCompany, listingImageURL } = rentalListing;
+  const rentalListingTitle = `${neighborhood} - ${bed} - ${bath}`
+
   return (
-    <Card className={classes.post} square elevation={2}>
-      <CardActionArea onClick={handleClickPost}>
+    <Card className={classes.rentalListingCard} square elevation={2}>
+      <CardActionArea onClick={handleClickRentalListing} aria-label="Rental">
         <CardMedia
           style={{ height: 200 }}
-          image={rentalListing.listingImageURL}
+          image={listingImageURL}
           title={rentalListingTitle}
         />
-        <CardContent>
-          <Typography gutterBottom variant="body1" className={classes.neighborhoodTag}>
-            <strong>{rentalListing.neighborhood.toUpperCase()}</strong>
+        <CardContent className={classes.rentalListingDetails}>
+          <div>
+            <Typography gutterBottom variant="body1" className={classes.neighborhoodTag}>
+              <strong>{neighborhood && neighborhood.toUpperCase()}</strong>
+            </Typography>
+            <Typography gutterBottom variant="body1">
+              {bed} beds <strong>&#183;</strong> {bath} bath
           </Typography>
-          <Typography gutterBottom variant="body1">
-            {rentalListing.bed} beds <strong>&#183;</strong> {rentalListing.bath} bath
-          </Typography>
-          <Typography gutterBottom variant="body1">
-            {rentalListing.listingCompany}
-          </Typography>
+            <Typography gutterBottom variant="body1">
+              {listingCompany}
+            </Typography>
+          </div>
+          <div>
+            <Typography gutterBottom variant="subtitle1" className={classes.priceTag}>
+              <strong>{rent && `$${rent}`}</strong>
+            </Typography>
+          </div>
         </CardContent>
       </CardActionArea>
     </Card>)

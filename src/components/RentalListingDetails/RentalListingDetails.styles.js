@@ -1,28 +1,26 @@
-const styles = {
-  postFeed: {
-    backgroundColor: '#ddd'
-  },
-  post: {
-    marginBottom: '0.5em',
-    border: '1px solid #bbb'
-  },
-  listingContainer: {
-    marginTop: '56px',
-  },
-  listingDetails: {
+const styles = (theme) => ({
+  rentalListingDetails: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'top',
     padding: '16px'
   },
-  listingImage: {
+  rentalListingImage: {
     width: '100%'
+  },
+  priceTag: {
+    display: 'inline-block',
+    backgroundColor: '#000',
+    padding: '6px 12px',
+    color: '#fff'
   },
   neighborhoodTag: {
     display: 'inline-block',
-    backgroundColor: '#0380C5',
+    backgroundColor: theme.palette.secondary.main,
     transformation: 'uppercase',
     padding: '3px 6px',
     borderRadius: '3px',
-    color: '#fff'
   }
-}
+});
 
 export default styles;

@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '../../firebaseConfig';
-import { withStyles } from '@material-ui/core/styles';
-
-import Header from '../Header/Header';
+import RentalListingFeedHeader from './RentalListingFeedHeader/RentalListingFeedHeader';
 import RentalListing from './RentalListing/RentalListing';
 import RentalListingDetails from '../RentalListingDetails/RentalListingDetails';
 import NewRentalListingForm from '../NewRentalListingForm/NewRentalListingForm';
-import styles from './RentalListingFeed.styles';
 
-function RentalListingFeed({ classes }) {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [viewingListingDetails, setViewingListingDetails] = useState(false);
-  const [currentListingDetails, setCurrentListingDetails] = useState({});
+function RentalListingFeed() {
+  const [viewingRentalListingDetails, setViewingRentalListingDetails] = useState(false);
+  const [currentRentalListingDetails, setCurrentRentalListingDetails] = useState({});
   const [creatingRentalListing, setCreatingRentalListing] = useState(false);
   const [rentalListings, setRentalListings] = useState([]);
 
@@ -26,23 +22,21 @@ function RentalListingFeed({ classes }) {
         );
     }, [JSON.stringify(rentalListings)]);
 
-  function handleClickNewPost() {
+  function handleClickNewRentalListing() {
     setCreatingRentalListing(true);
-    setAnchorEl(null);
   };
 
-  function handleCloseCreatePost() {
+  function handleCloseNewRentalListingForm() {
     setCreatingRentalListing(false);
   };
 
-  function handleClickPost(rentalListing) {
-    console.log(rentalListing);
-    setViewingListingDetails(true);
-    setCurrentListingDetails(rentalListing);
+  function handleClickRentalListing(rentalListing) {
+    setViewingRentalListingDetails(true);
+    setCurrentRentalListingDetails(rentalListing);
   };
 
-  function handleClosePostView() {
-    setViewingListingDetails(false);
+  function handleCloseRentalListingDetails() {
+    setViewingRentalListingDetails(false);
   };
 
   function getRentalListings() {
@@ -52,7 +46,7 @@ function RentalListingFeed({ classes }) {
         (<RentalListing
           key={key}
           rentalListing={rentalListing}
-          handleClickPost={() => handleClickPost(rentalListing)}
+          handleClickRentalListing={() => handleClickRentalListing(rentalListing)}
         />));
 
     return rentalListingComponents;
@@ -60,22 +54,21 @@ function RentalListingFeed({ classes }) {
 
   return (
     <>
-      <Header
-        anchorEl={anchorEl}
-        handleClickNewPost={handleClickNewPost}
+      <RentalListingFeedHeader
+        handleClickNewRentalListing={handleClickNewRentalListing}
       />
-      {getRentalListings()}
+      {rentalListings && getRentalListings()}
       <RentalListingDetails
-        openListingDetails={viewingListingDetails}
-        handleClose={handleClosePostView}
-        rentalListing={currentListingDetails}
+        openListingDetails={viewingRentalListingDetails}
+        handleCloseRentalListingDetails={handleCloseRentalListingDetails}
+        rentalListing={currentRentalListingDetails}
       />
       <NewRentalListingForm
         openNewRentalListing={creatingRentalListing}
-        handleClose={handleCloseCreatePost}
+        handleCloseNewRentalListingForm={handleCloseNewRentalListingForm}
       />
     </>
   );
 };
 
-export default withStyles(styles)(RentalListingFeed);
+export default RentalListingFeed;

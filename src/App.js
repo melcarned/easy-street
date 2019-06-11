@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import RentalListingFeed from './components/RentalListingFeed/RentalListingFeed';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import RentalListingFeed from './components/RentalListingFeed/RentalListingFeed';
 
 const theme = createMuiTheme({
   palette: {
@@ -9,22 +9,18 @@ const theme = createMuiTheme({
       main: '#032765',
     },
     secondary: {
-      main: '#0380C5',
+      main: '#D4ECFA',
     },
   }
 });
 
-class App extends Component {
-  render() {
-    return (
-      <React.Fragment>
-        <MuiThemeProvider theme={theme}>
-          <CssBaseline />
-          <RentalListingFeed />
-        </MuiThemeProvider>
-      </React.Fragment>
-    );
-  }
+function App() {
+  return <>
+    <MuiThemeProvider theme={theme}>
+      <CssBaseline />
+      <RentalListingFeed />
+    </MuiThemeProvider>
+  </>
 }
 
 export default App;
