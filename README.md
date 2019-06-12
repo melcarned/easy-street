@@ -7,9 +7,9 @@
 
   <img src="https://firebasestorage.googleapis.com/v0/b/easy-street-5da22.appspot.com/o/Screenshots%2FNew_Rental_Listing_Empty.png?alt=media&token=02b7eadf-a48f-45a1-8696-078fc7a06bcb" width="200" />
 
-  <img src="https://firebasestorage.googleapis.com/v0/b/easy-street-5da22.appspot.com/o/Screenshots%2FRental_Listing_Details.png?alt=media&token=d755108f-1c00-4164-af09-67df69dd05a6" width="200" />
+  <img src="https://firebasestorage.googleapis.com/v0/b/easy-street-5da22.appspot.com/o/Screenshots%2FNew_Rental_Listing.png?alt=media&token=8e2b3f10-b1cc-4506-9556-edd1ed71f145" width="200" />
 
-  <img src="https://firebasestorage.googleapis.com/v0/b/easy-street-5da22.appspot.com/o/Screenshots%2FRental_Listing_Feed.png?alt=media&token=e19bbd9d-86f8-4544-a4db-3533bdf5b4d5" width="200" />
+  <img src="https://firebasestorage.googleapis.com/v0/b/easy-street-5da22.appspot.com/o/Screenshots%2FRental_Listing_Details.png?alt=media&token=d755108f-1c00-4164-af09-67df69dd05a6" width="200" />
 </div>
 
 ### `npm start`
